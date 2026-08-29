@@ -108,7 +108,7 @@ export const QUESTIONS_40: QuestionItem[] = [
     options: [
       { word: 'Buồn cười', style: 'peacock', columnNumber: 1 },
       { word: 'Mạnh mẽ', style: 'eagle', columnNumber: 2 },
-      { word: 'Trung thủy', style: 'owl', columnNumber: 3 },
+      { word: 'Chung thủy', style: 'owl', columnNumber: 3 },
       { word: 'Thân thiện', style: 'dove', columnNumber: 4 }
     ]
   },
@@ -416,7 +416,7 @@ export const QUESTIONS_40: QuestionItem[] = [
     section: 'weakness',
     sectionLabel: 'Phần 2: Điểm Yếu',
     options: [
-      { word: 'Đãng chí', style: 'peacock', columnNumber: 1 },
+      { word: 'Đãng trí', style: 'peacock', columnNumber: 1 },
       { word: 'Hay cáu', style: 'eagle', columnNumber: 2 },
       { word: 'Nghi ngờ', style: 'owl', columnNumber: 3 },
       { word: 'Chậm chạp', style: 'dove', columnNumber: 4 }
