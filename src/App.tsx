@@ -10,8 +10,14 @@ import { ProgressBar } from './components/ProgressBar';
 import { QuestionCard } from './components/QuestionCard';
 import { PersonalityReport } from './components/PersonalityReport';
 import { PDFExportView } from './components/PDFExportView';
+import { ResearchPage } from './components/ResearchPage';
+import { BookOpen } from 'lucide-react';
 
 export const App: React.FC = () => {
+  const [currentView, setCurrentView] = useState<'survey' | 'research'>(() => {
+    return window.location.hash === '#research' ? 'research' : 'survey';
+  });
+
   const [userProfile, setUserProfile] = useState<UserProfile | null>(() => {
     const saved = localStorage.getItem('user_personality_profile');
     return saved ? JSON.parse(saved) : null;
@@ -35,6 +41,25 @@ export const App: React.FC = () => {
 
   const [isExportingPDF, setIsExportingPDF] = useState<boolean>(false);
   const [webhookStatus, setWebhookStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  // Handle URL hash changes
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === '#research') {
+        setCurrentView('research');
+      } else {
+        setCurrentView('survey');
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  const handleNavigateView = (view: 'survey' | 'research') => {
+    setCurrentView(view);
+    window.location.hash = view === 'research' ? '#research' : '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   // Save progress to localStorage
   useEffect(() => {
@@ -157,7 +182,7 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
-      {/* Top Header */}
+      {/* Top Header with Navigation */}
       <Header
         currentStep={totalAnswered}
         totalSteps={QUESTIONS_40.length}
@@ -165,49 +190,64 @@ export const App: React.FC = () => {
         onReset={handleReset}
         userName={userProfile?.fullName}
         mode={currentMode}
+        currentView={currentView}
+        onNavigateView={handleNavigateView}
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-10">
-        {!isCompleted ? (
-          <div className="space-y-8 animate-fadeIn max-w-3xl mx-auto">
-            {/* Progress Component */}
-            <ProgressBar
-              currentQuestionIndex={currentQuestionIndex}
-              totalQuestions={QUESTIONS_40.length}
-              answersMap={answersMap}
-              onJumpToQuestion={handleJumpToQuestion}
-            />
-
-            {/* Question Card */}
-            <QuestionCard
-              question={currentQuestion}
-              questionIndex={currentQuestionIndex}
-              totalQuestions={QUESTIONS_40.length}
-              selectedStyle={answersMap[currentQuestion.id]}
-              onSelectOption={handleSelectOption}
-              onPrevious={handlePrevious}
-              onNext={handleNext}
-              onSubmit={handleSubmit}
-              canSubmit={canSubmit}
-            />
-
-            {/* Hint Notice */}
-            <div className="text-center text-xs text-slate-500">
-              💡 Gợi ý: Hãy tin tưởng vào phản xạ trực giác đầu tiên của bạn để kết quả phản ánh chân thật nhất!
-            </div>
-          </div>
+      <main className="flex-1 w-full">
+        {currentView === 'research' ? (
+          <ResearchPage onBackToSurvey={() => handleNavigateView('survey')} />
         ) : (
-          result && (
-            <PersonalityReport
-              result={result}
-              onReset={handleReset}
-              onExportPDF={handleExportPDF}
-              isExporting={isExportingPDF}
-              webhookStatus={webhookStatus}
-              onSyncCloud={handleSyncCloud}
-            />
-          )
+          <div className="max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-10">
+            {!isCompleted ? (
+              <div className="space-y-8 animate-fadeIn max-w-3xl mx-auto">
+                {/* Progress Component */}
+                <ProgressBar
+                  currentQuestionIndex={currentQuestionIndex}
+                  totalQuestions={QUESTIONS_40.length}
+                  answersMap={answersMap}
+                  onJumpToQuestion={handleJumpToQuestion}
+                />
+
+                {/* Question Card */}
+                <QuestionCard
+                  question={currentQuestion}
+                  questionIndex={currentQuestionIndex}
+                  totalQuestions={QUESTIONS_40.length}
+                  selectedStyle={answersMap[currentQuestion.id]}
+                  onSelectOption={handleSelectOption}
+                  onPrevious={handlePrevious}
+                  onNext={handleNext}
+                  onSubmit={handleSubmit}
+                  canSubmit={canSubmit}
+                />
+
+                {/* Hint Notice with link to Research */}
+                <div className="text-center text-xs text-slate-400 space-y-1.5 pt-2">
+                  <p>💡 Gợi ý: Hãy tin tưởng vào phản xạ trực giác đầu tiên của bạn để kết quả phản ánh chân thật nhất!</p>
+                  <button
+                    onClick={() => handleNavigateView('research')}
+                    className="inline-flex items-center gap-1 text-indigo-400 hover:text-indigo-300 underline underline-offset-4 text-xs font-medium"
+                  >
+                    <BookOpen className="w-3.5 h-3.5" />
+                    <span>Tìm hiểu về Cơ sở Khoa học & Thuyết 4 Khí Chất ➔</span>
+                  </button>
+                </div>
+              </div>
+            ) : (
+              result && (
+                <PersonalityReport
+                  result={result}
+                  onReset={handleReset}
+                  onExportPDF={handleExportPDF}
+                  isExporting={isExportingPDF}
+                  webhookStatus={webhookStatus}
+                  onSyncCloud={handleSyncCloud}
+                />
+              )
+            )}
+          </div>
         )}
       </main>
 
@@ -218,14 +258,36 @@ export const App: React.FC = () => {
 
       {/* Onboarding Dialog */}
       <OnboardingModal
-        isOpen={isOnboardingOpen}
+        isOpen={isOnboardingOpen && currentView === 'survey'}
         onStart={handleStartOnboarding}
       />
 
-      {/* Footer */}
-      <footer className="mt-auto border-t border-slate-900 bg-slate-950 py-6 text-center text-xs text-slate-500">
+      {/* Footer with Research Link */}
+      <footer className="mt-auto border-t border-slate-900 bg-slate-950 py-6 text-center text-xs text-slate-500 space-y-2">
         <p>Hồ Sơ Phong Cách Xã Hội • Hệ thống Đánh Giá Tính Cách 4 Nhóm (Chim Công • Đại Bàng • Chim Cú • Bồ Câu)</p>
-        <p className="mt-1 text-slate-600">Được phát triển với React, TypeScript, Tailwind CSS & Vite</p>
+        <div className="flex items-center justify-center gap-4 text-slate-400">
+          <button
+            onClick={() => handleNavigateView('survey')}
+            className="hover:text-indigo-400 transition-colors"
+          >
+            Làm Khảo Sát
+          </button>
+          <span>•</span>
+          <button
+            onClick={() => handleNavigateView('research')}
+            className="hover:text-indigo-400 transition-colors font-medium text-indigo-400"
+          >
+            🔬 Cơ Sở Khoa Học & Báo Cáo Nghiên Cứu
+          </button>
+          <span>•</span>
+          <a
+            href="/research_report.pdf"
+            download
+            className="hover:text-indigo-400 transition-colors"
+          >
+            📥 Tải PDF Nghiên Cứu
+          </a>
+        </div>
       </footer>
     </div>
   );
