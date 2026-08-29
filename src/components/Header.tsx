@@ -1,5 +1,5 @@
 import React from 'react';
-import { Compass, RotateCcw, Award, ShieldCheck, Cloud, BookOpen, Sparkles } from 'lucide-react';
+import { Compass, RotateCcw, Award, ShieldCheck, Cloud, BookOpen, Lightbulb } from 'lucide-react';
 import { AssessmentMode } from '../types/personality';
 
 interface HeaderProps {
@@ -9,8 +9,8 @@ interface HeaderProps {
   onReset: () => void;
   userName?: string;
   mode?: AssessmentMode;
-  currentView?: 'survey' | 'research';
-  onNavigateView?: (view: 'survey' | 'research') => void;
+  currentView?: 'survey' | 'research' | 'roadmap';
+  onNavigateView?: (view: 'survey' | 'research' | 'roadmap') => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -43,7 +43,7 @@ export const Header: React.FC<HeaderProps> = ({
               >
                 HỒ SƠ PHONG CÁCH XÃ HỘI
               </h1>
-              <span className="hidden sm:inline-block px-2 py-0.5 text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded-full">
+              <span className="hidden md:inline-block px-2 py-0.5 text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded-full">
                 4 Nhóm Tính Cách
               </span>
             </div>
@@ -63,12 +63,12 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         <div className="flex items-center gap-2 sm:gap-4">
-          {/* Navigation link between Survey and Research */}
+          {/* Navigation link between Survey, Research and Roadmap */}
           {onNavigateView && (
             <div className="flex items-center p-1 bg-slate-800/80 rounded-xl border border-slate-700/60 text-xs">
               <button
                 onClick={() => onNavigateView('survey')}
-                className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
+                className={`px-2.5 sm:px-3 py-1.5 rounded-lg font-semibold transition-all ${
                   currentView === 'survey'
                     ? 'bg-indigo-600 text-white shadow-sm'
                     : 'text-slate-400 hover:text-slate-200'
@@ -79,14 +79,26 @@ export const Header: React.FC<HeaderProps> = ({
 
               <button
                 onClick={() => onNavigateView('research')}
-                className={`flex items-center gap-1 px-3 py-1.5 rounded-lg font-semibold transition-all ${
+                className={`flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-lg font-semibold transition-all ${
                   currentView === 'research'
                     ? 'bg-indigo-600 text-white shadow-sm'
                     : 'text-slate-400 hover:text-slate-200'
                 }`}
               >
                 <BookOpen className="w-3.5 h-3.5" />
-                <span>Nghiên Cứu</span>
+                <span className="hidden sm:inline">Nghiên Cứu</span>
+              </button>
+
+              <button
+                onClick={() => onNavigateView('roadmap')}
+                className={`flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-lg font-semibold transition-all ${
+                  currentView === 'roadmap'
+                    ? 'bg-amber-600 text-white shadow-sm'
+                    : 'text-slate-400 hover:text-amber-300'
+                }`}
+              >
+                <Lightbulb className="w-3.5 h-3.5 text-amber-400" />
+                <span className="hidden sm:inline">Ý Tưởng</span>
               </button>
             </div>
           )}
@@ -94,7 +106,7 @@ export const Header: React.FC<HeaderProps> = ({
           {currentView === 'survey' && (
             <>
               {userName && userName !== 'Khách Ẩn Danh' && (
-                <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 text-xs text-slate-300">
+                <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 text-xs text-slate-300">
                   <Award className="w-4 h-4 text-amber-400" />
                   <span>{userName}</span>
                 </div>
@@ -102,7 +114,7 @@ export const Header: React.FC<HeaderProps> = ({
 
               {!isCompleted ? (
                 <div className="text-right pl-1">
-                  <span className="text-[11px] font-medium text-slate-400">Tiến độ:</span>
+                  <span className="text-[10px] font-medium text-slate-400">Tiến độ:</span>
                   <div className="text-xs sm:text-sm font-bold text-indigo-400">
                     {currentStep} <span className="text-slate-500">/</span> {totalSteps}
                   </div>

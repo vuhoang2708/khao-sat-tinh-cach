@@ -11,11 +11,14 @@ import { QuestionCard } from './components/QuestionCard';
 import { PersonalityReport } from './components/PersonalityReport';
 import { PDFExportView } from './components/PDFExportView';
 import { ResearchPage } from './components/ResearchPage';
-import { BookOpen } from 'lucide-react';
+import { RoadmapPage } from './components/RoadmapPage';
+import { BookOpen, Lightbulb } from 'lucide-react';
 
 export const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<'survey' | 'research'>(() => {
-    return window.location.hash === '#research' ? 'research' : 'survey';
+  const [currentView, setCurrentView] = useState<'survey' | 'research' | 'roadmap'>(() => {
+    if (window.location.hash === '#research') return 'research';
+    if (window.location.hash === '#roadmap' || window.location.hash === '#ideas') return 'roadmap';
+    return 'survey';
   });
 
   const [userProfile, setUserProfile] = useState<UserProfile | null>(() => {
@@ -47,6 +50,8 @@ export const App: React.FC = () => {
     const handleHashChange = () => {
       if (window.location.hash === '#research') {
         setCurrentView('research');
+      } else if (window.location.hash === '#roadmap' || window.location.hash === '#ideas') {
+        setCurrentView('roadmap');
       } else {
         setCurrentView('survey');
       }
@@ -55,9 +60,15 @@ export const App: React.FC = () => {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  const handleNavigateView = (view: 'survey' | 'research') => {
+  const handleNavigateView = (view: 'survey' | 'research' | 'roadmap') => {
     setCurrentView(view);
-    window.location.hash = view === 'research' ? '#research' : '';
+    if (view === 'research') {
+      window.location.hash = '#research';
+    } else if (view === 'roadmap') {
+      window.location.hash = '#roadmap';
+    } else {
+      window.location.hash = '';
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -198,6 +209,11 @@ export const App: React.FC = () => {
       <main className="flex-1 w-full">
         {currentView === 'research' ? (
           <ResearchPage onBackToSurvey={() => handleNavigateView('survey')} />
+        ) : currentView === 'roadmap' ? (
+          <RoadmapPage 
+            onBackToSurvey={() => handleNavigateView('survey')} 
+            onNavigateToResearch={() => handleNavigateView('research')}
+          />
         ) : (
           <div className="max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-10">
             {!isCompleted ? (
@@ -223,16 +239,26 @@ export const App: React.FC = () => {
                   canSubmit={canSubmit}
                 />
 
-                {/* Hint Notice with link to Research */}
-                <div className="text-center text-xs text-slate-400 space-y-1.5 pt-2">
+                {/* Hint Notice with links to Research and Roadmap */}
+                <div className="text-center text-xs text-slate-400 space-y-2 pt-2">
                   <p>💡 Gợi ý: Hãy tin tưởng vào phản xạ trực giác đầu tiên của bạn để kết quả phản ánh chân thật nhất!</p>
-                  <button
-                    onClick={() => handleNavigateView('research')}
-                    className="inline-flex items-center gap-1 text-indigo-400 hover:text-indigo-300 underline underline-offset-4 text-xs font-medium"
-                  >
-                    <BookOpen className="w-3.5 h-3.5" />
-                    <span>Tìm hiểu về Cơ sở Khoa học & Thuyết 4 Khí Chất ➔</span>
-                  </button>
+                  <div className="flex flex-wrap items-center justify-center gap-3">
+                    <button
+                      onClick={() => handleNavigateView('research')}
+                      className="inline-flex items-center gap-1 text-indigo-400 hover:text-indigo-300 underline underline-offset-4 text-xs font-medium"
+                    >
+                      <BookOpen className="w-3.5 h-3.5" />
+                      <span>Cơ sở Khoa học & Thuyết 4 Khí Chất ➔</span>
+                    </button>
+                    <span>•</span>
+                    <button
+                      onClick={() => handleNavigateView('roadmap')}
+                      className="inline-flex items-center gap-1 text-amber-400 hover:text-amber-300 underline underline-offset-4 text-xs font-medium"
+                    >
+                      <Lightbulb className="w-3.5 h-3.5" />
+                      <span>Ý Tưởng Phát Triển Hệ Thống ➔</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             ) : (
@@ -262,22 +288,29 @@ export const App: React.FC = () => {
         onStart={handleStartOnboarding}
       />
 
-      {/* Footer with Research Link */}
+      {/* Footer with Navigation Links */}
       <footer className="mt-auto border-t border-slate-900 bg-slate-950 py-6 text-center text-xs text-slate-500 space-y-2">
         <p>Hồ Sơ Phong Cách Xã Hội • Hệ thống Đánh Giá Tính Cách 4 Nhóm (Chim Công • Đại Bàng • Chim Cú • Bồ Câu)</p>
-        <div className="flex items-center justify-center gap-4 text-slate-400">
+        <div className="flex flex-wrap items-center justify-center gap-3 text-slate-400">
           <button
             onClick={() => handleNavigateView('survey')}
             className="hover:text-indigo-400 transition-colors"
           >
-            Làm Khảo Sát
+            📝 Làm Khảo Sát
           </button>
           <span>•</span>
           <button
             onClick={() => handleNavigateView('research')}
             className="hover:text-indigo-400 transition-colors font-medium text-indigo-400"
           >
-            🔬 Cơ Sở Khoa Học & Báo Cáo Nghiên Cứu
+            🔬 Cơ Sở Khoa Học
+          </button>
+          <span>•</span>
+          <button
+            onClick={() => handleNavigateView('roadmap')}
+            className="hover:text-amber-400 transition-colors font-medium text-amber-400"
+          >
+            💡 Ý Tưởng Phát Triển
           </button>
           <span>•</span>
           <a
