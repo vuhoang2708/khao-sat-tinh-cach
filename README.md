@@ -2,6 +2,10 @@
 
 Hệ thống trắc nghiệm và đánh giá phong cách giao tiếp, ra quyết định và thiên hướng hành vi dựa trên **Mô hình Phong cách Xã hội (Social Styles Matrix - Merrill & Reid 1981)**, **Thuyết 4 Khí Chất (Four Temperaments - Hippocrates & Galen / Wilhelm Wundt / Ivan Pavlov)** và công trình **Personality Plus (Florence Littauer 1983)**.
 
+- **Môi trường Live Production**: [https://khao-sat-tinh-cach.vercel.app](https://khao-sat-tinh-cach.vercel.app)
+- **Cổng Nghiên cứu Khoa học**: [https://khao-sat-tinh-cach.vercel.app/#research](https://khao-sat-tinh-cach.vercel.app/#research)
+- **Cổng Ý tưởng Phát triển**: [https://khao-sat-tinh-cach.vercel.app/#roadmap](https://khao-sat-tinh-cach.vercel.app/#roadmap)
+
 ---
 
 ## 🌟 4 Nhóm Tính Cách Biểu Trưng
@@ -41,7 +45,7 @@ Hệ thống trắc nghiệm và đánh giá phong cách giao tiếp, ra quyết
 # 1. Cài đặt dependencies
 npm install
 
-# 2. Chạy môi trường phát triển (Dev server)
+# 2. Chạy máy chủ phát triển (Dev server)
 npm run dev
 
 # 3. Chạy kiểm thử tự động (Unit Tests)
@@ -53,8 +57,19 @@ npm run build
 
 ---
 
-## 📚 Tài Liệu Nghiên Cứu Chuyên Sâu (Docs & Research)
+## 📚 Hệ Thống Tài Liệu Kỹ Thuật & Nghiệp Vụ (Documentation Hub)
 
-- [Báo Cáo Nghiên Cứu Khoa Học (PDF)](./docs/research/BAO_CAO_NGHIEN_CUU_KHOA_HOC_THUYET_4_KHI_CHAT_VA_SOCIAL_STYLES.pdf)
-- [Báo Cáo Nghiên Cứu Khoa Học (Markdown)](./docs/research/research_social_styles_scientific_foundations_20260828.md)
-- [Báo Cáo Kiểm Thử Nghiệm Thu (UAT Report)](./UAT/UAT_REPORT.md)
+Toàn bộ tài liệu chuẩn của dự án được lưu trữ tập trung tại thư mục [`./docs`](./docs):
+
+| Tài Liệu | Nội Dung Chính |
+| :--- | :--- |
+| 📋 [**Tổng Quan & Yêu Cầu PDR**](./docs/project-overview-pdr.md) | Tầm nhìn sản phẩm, User Personas, Yêu cầu chức năng FR & NFR. |
+| 💻 [**Cấu Trúc Mã Nguồn**](./docs/codebase-summary.md) | Sơ đồ cây thư mục, vai trò các file và hệ thống Type. |
+| 🏗️ [**Kiến Trúc Hệ Thống**](./docs/system-architecture.md) | Sơ đồ luồng dữ liệu Mermaid, kiến trúc Dual-Mode và xuất PDF. |
+| 📏 [**Chuẩn Mực Viết Mã**](./docs/code-standards.md) | Quy ước TypeScript, React, UTF-8 và chính tả tiếng Việt. |
+| 🗺️ [**Lộ Trình Phát Triển**](./docs/project-roadmap.md) | Kế hoạch 4 giai đoạn: Nền tảng, Lan truyền, B2B và AI Copilot. |
+| 🚀 [**Hướng Dẫn Vận Hành**](./docs/deployment-guide.md) | Triển khai Vercel, cài đặt cục bộ và xử lý sự cố. |
+| 🎨 [**Quy Chuẩn Thiết Kế**](./docs/design-guidelines.md) | Triết lý Glassmorphism, mã màu 4 loài chim và trợ năng. |
+| 🔬 [**Nghiên Cứu Khoa Học (PDF)**](./docs/research/BAO_CAO_NGHIEN_CUU_KHOA_HOC_THUYET_4_KHI_CHAT_VA_SOCIAL_STYLES.pdf) | Báo cáo chuyên sâu 2.400 năm tiến hóa của Thuyết 4 Khí Chất. |
+| 💡 [**Chiến Lược Mở Rộng**](./docs/research/RESEARCH_APPLICATION_GROWTH_DIRECTIONS_2026.md) | Nghiên cứu chi tiết 5 trụ cột mở rộng hệ sinh thái. |
+| 🧪 [**Báo Cáo Kiểm Thử UAT**](./UAT/UAT_REPORT.md) | Kết quả kiểm thử tự động Playwright trên môi trường Production. |
