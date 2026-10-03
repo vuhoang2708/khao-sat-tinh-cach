@@ -5,7 +5,8 @@ import { calculateAssessmentResults } from './engine/scoringEngine';
 import { submitAssessmentData } from './utils/webhook';
 import { exportReportToPDF } from './utils/pdfExport';
 import { Header } from './components/Header';
-import { OnboardingModal } from './components/OnboardingModal';
+import { AuthGateModal } from './components/AuthGateModal';
+import { getStoredAuth, syncSurveyCompletion, UserAuth } from './utils/auth';
 import { ProgressBar } from './components/ProgressBar';
 import { QuestionCard } from './components/QuestionCard';
 import { PersonalityReport } from './components/PersonalityReport';
@@ -22,12 +23,23 @@ export const App: React.FC = () => {
   });
 
   const [userProfile, setUserProfile] = useState<UserProfile | null>(() => {
+    const auth = getStoredAuth();
+    if (auth) {
+      return {
+        fullName: auth.full_name,
+        email: auth.email,
+        phoneOrRole: auth.phone,
+        mode: 'cloud_sync'
+      };
+    }
     const saved = localStorage.getItem('user_personality_profile');
     return saved ? JSON.parse(saved) : null;
   });
 
-  const [isOnboardingOpen, setIsOnboardingOpen] = useState<boolean>(() => {
-    return !localStorage.getItem('user_personality_profile');
+  const [isAuthGateOpen, setIsAuthGateOpen] = useState<boolean>(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('token')) return true;
+    return !getStoredAuth();
   });
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
@@ -85,10 +97,16 @@ export const App: React.FC = () => {
     }
   }, [result]);
 
-  const handleStartOnboarding = (profile: UserProfile) => {
+  const handleAuthVerified = (auth: UserAuth) => {
+    const profile: UserProfile = {
+      fullName: auth.full_name,
+      email: auth.email,
+      phoneOrRole: auth.phone,
+      mode: 'cloud_sync'
+    };
     setUserProfile(profile);
     localStorage.setItem('user_personality_profile', JSON.stringify(profile));
-    setIsOnboardingOpen(false);
+    setIsAuthGateOpen(false);
   };
 
   const handleSelectOption = (questionId: number, style: SocialStyle) => {
@@ -132,6 +150,10 @@ export const App: React.FC = () => {
       setWebhookStatus('loading');
       const success = await submitAssessmentData(calculatedResult);
       setWebhookStatus(success ? 'success' : 'error');
+
+      if (profile.email) {
+        syncSurveyCompletion(profile.email, 'SS', `Phong cách: ${calculatedResult.dominantStyle}`);
+      }
     } else {
       setWebhookStatus('idle');
     }
@@ -282,10 +304,10 @@ export const App: React.FC = () => {
         {result && <PDFExportView result={result} />}
       </div>
 
-      {/* Onboarding Dialog */}
-      <OnboardingModal
-        isOpen={isOnboardingOpen && currentView === 'survey'}
-        onStart={handleStartOnboarding}
+      {/* Auth Gate Dialog */}
+      <AuthGateModal
+        isOpen={isAuthGateOpen && currentView === 'survey'}
+        onVerified={handleAuthVerified}
       />
 
       {/* Footer with Navigation Links */}
