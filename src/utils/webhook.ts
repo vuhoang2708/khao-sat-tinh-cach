@@ -1,7 +1,7 @@
 import { AssessmentResult } from '../types/personality';
 
-// Google Apps Script Webhook URL (replace with deployed exec URL if live deployed)
-export const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbz_placeholder/exec';
+// Google Apps Script Webhook URL (configured via VITE_WEBHOOK_URL or fallback placeholder)
+export const WEBHOOK_URL = ((import.meta as any).env?.VITE_WEBHOOK_URL as string) || 'https://script.google.com/macros/s/AKfycbz_placeholder/exec';
 
 export async function submitAssessmentData(result: AssessmentResult): Promise<boolean> {
   const payload = {
