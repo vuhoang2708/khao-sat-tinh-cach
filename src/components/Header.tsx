@@ -11,6 +11,7 @@ interface HeaderProps {
   mode?: AssessmentMode;
   currentView?: 'survey' | 'research' | 'roadmap';
   onNavigateView?: (view: 'survey' | 'research' | 'roadmap') => void;
+  onOpenAuth?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -21,7 +22,8 @@ export const Header: React.FC<HeaderProps> = ({
   userName,
   mode = 'local_anonymous',
   currentView = 'survey',
-  onNavigateView
+  onNavigateView,
+  onOpenAuth
 }) => {
   return (
     <header className="sticky top-0 z-40 bg-slate-900/85 backdrop-blur-md border-b border-slate-800 transition-all">
@@ -63,6 +65,17 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         <div className="flex items-center gap-2 sm:gap-4">
+          {(!userName || userName === 'Khách Ẩn Danh') && onOpenAuth && (
+            <button
+              onClick={onOpenAuth}
+              className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:brightness-110 active:scale-95 text-slate-950 text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
+              title="Đăng nhập tài khoản học viên"
+            >
+              <span>🔑</span>
+              <span>Đăng Nhập</span>
+            </button>
+          )}
+
           {/* Navigation link between Survey, Research and Roadmap */}
           {onNavigateView && (
             <div className="flex items-center p-1 bg-slate-800/80 rounded-xl border border-slate-700/60 text-xs">
