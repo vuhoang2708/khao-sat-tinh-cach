@@ -439,9 +439,9 @@ export const ResearchPage: React.FC<ResearchPageProps> = ({ onBackToSurvey }) =>
               </tr>
               <tr className="hover:bg-slate-800/40">
                 <td className="p-3 font-semibold text-white">Social Styles (1981)</td>
-                <td className="p-3">Expressive (Ưa Thể Hiện)</td>
-                <td className="p-3">Driver (Ưa Chỉ Đạo)</td>
-                <td className="p-3">Analytical (Ưa Phân Tích)</td>
+                <td className="p-3">Expressive (Thể Hiện)</td>
+                <td className="p-3">Driver (Chỉ Đạo)</td>
+                <td className="p-3">Analytical (Phân Tích)</td>
                 <td className="p-3">Amiable (Dễ Chịu)</td>
               </tr>
               <tr className="hover:bg-slate-800/40">

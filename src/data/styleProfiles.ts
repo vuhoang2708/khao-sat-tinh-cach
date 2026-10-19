@@ -3,8 +3,8 @@ import { StyleProfile, SocialStyle } from '../types/personality';
 export const STYLE_PROFILES: Record<SocialStyle, StyleProfile> = {
   peacock: {
     id: 'peacock',
-    name: 'Ưa Thể Hiện (Chim Công)',
-    vietnameseName: 'Chim Công — Ưa Thể Hiện',
+    name: 'Thể Hiện (Chim Công)',
+    vietnameseName: 'Chim Công — Thể Hiện',
     englishStyle: 'Expressive / Sanguine',
     animal: 'Chim Công',
     icon: '🦚',
@@ -12,8 +12,8 @@ export const STYLE_PROFILES: Record<SocialStyle, StyleProfile> = {
       bg: 'from-amber-500/20 to-orange-500/20',
       border: 'border-amber-500/40',
       text: 'text-amber-400',
-      accent: '#F59E0B',
-      glow: 'shadow-[0_0_25px_rgba(245,158,11,0.3)]'
+      accent: '#FFC000',
+      glow: 'shadow-[0_0_25px_rgba(255,192,0,0.3)]'
     },
     tagline: 'Sáng tạo, Truyền cảm hứng, Hoạt ngôn & Tràn đầy Năng lượng',
     overview: 'Người thuộc nhóm Chim Công là tâm điểm của sự gắn kết xã hội, luôn mang lại bầu không khí vui vẻ, sôi nổi và nguồn cảm hứng bất tận cho tập thể. Họ giao tiếp xuất sắc, giàu trí tưởng tượng và dễ dàng kết nối mọi người.',
@@ -90,8 +90,8 @@ export const STYLE_PROFILES: Record<SocialStyle, StyleProfile> = {
 
   eagle: {
     id: 'eagle',
-    name: 'Ưa Chỉ Đạo (Đại Bàng)',
-    vietnameseName: 'Đại Bàng — Ưa Chỉ Đạo',
+    name: 'Chỉ Đạo (Đại Bàng)',
+    vietnameseName: 'Đại Bàng — Chỉ Đạo',
     englishStyle: 'Driver / Choleric',
     animal: 'Đại Bàng',
     icon: '🦅',
@@ -99,8 +99,8 @@ export const STYLE_PROFILES: Record<SocialStyle, StyleProfile> = {
       bg: 'from-rose-500/20 to-red-500/20',
       border: 'border-rose-500/40',
       text: 'text-rose-400',
-      accent: '#EF4444',
-      glow: 'shadow-[0_0_25px_rgba(239,68,68,0.3)]'
+      accent: '#C00000',
+      glow: 'shadow-[0_0_25px_rgba(192,0,0,0.3)]'
     },
     tagline: 'Quyết đoán, Mục tiêu, Dũng mãnh & Thực thi Tốc độ',
     overview: 'Người thuộc nhóm Đại Bàng là những nhà lãnh đạo bẩm sinh, tập trung cao độ vào kết quả, hành động quyết liệt và không ngại thử thách. Họ luôn hướng tới mục tiêu lớn và dẫn dắt đội ngũ tiến lên.',
@@ -172,8 +172,8 @@ export const STYLE_PROFILES: Record<SocialStyle, StyleProfile> = {
 
   owl: {
     id: 'owl',
-    name: 'Ưa Phân Tích (Chim Cú)',
-    vietnameseName: 'Chim Cú — Ưa Phân Tích',
+    name: 'Phân Tích (Chim Cú)',
+    vietnameseName: 'Chim Cú — Phân Tích',
     englishStyle: 'Analytical / Melancholy',
     animal: 'Chim Cú',
     icon: '🦉',
@@ -181,8 +181,8 @@ export const STYLE_PROFILES: Record<SocialStyle, StyleProfile> = {
       bg: 'from-indigo-500/20 to-blue-500/20',
       border: 'border-indigo-500/40',
       text: 'text-indigo-400',
-      accent: '#6366F1',
-      glow: 'shadow-[0_0_25px_rgba(99,102,241,0.3)]'
+      accent: '#2563EB',
+      glow: 'shadow-[0_0_25px_rgba(37,99,235,0.3)]'
     },
     tagline: 'Sâu sắc, Logic, Kỷ luật & Chuẩn mực Cầu toàn',
     overview: 'Người thuộc nhóm Chim Cú là bậc thầy về tư duy logic, sự tỉ mỉ và tiêu chuẩn chất lượng cao. Họ luôn tìm kiếm sự hoàn hảo, ngăn nắp, làm việc dựa trên dữ liệu và giải quyết vấn đề thấu đáo.',
@@ -253,17 +253,17 @@ export const STYLE_PROFILES: Record<SocialStyle, StyleProfile> = {
 
   dove: {
     id: 'dove',
-    name: 'Dễ Chịu (Bồ Câu)',
-    vietnameseName: 'Bồ Câu — Dễ Chịu',
+    name: 'Dễ Chịu (Chim Bồ Câu)',
+    vietnameseName: 'Chim Bồ Câu — Dễ Chịu',
     englishStyle: 'Amiable / Phlegmatic',
-    animal: 'Bồ Câu',
+    animal: 'Chim Bồ Câu',
     icon: '🕊️',
     color: {
       bg: 'from-emerald-500/20 to-teal-500/20',
       border: 'border-emerald-500/40',
       text: 'text-emerald-400',
-      accent: '#10B981',
-      glow: 'shadow-[0_0_25px_rgba(16,185,129,0.3)]'
+      accent: '#92D050',
+      glow: 'shadow-[0_0_25px_rgba(146,208,80,0.3)]'
     },
     tagline: 'Điềm tĩnh, Hòa nhã, Lắng nghe & Hợp tác Bền vững',
     overview: 'Người thuộc nhóm Bồ Câu là chỗ dựa bình yên và đáng tin cậy của mọi đội ngũ. Họ điềm đạm, biết lắng nghe, kiên nhẫn, luôn tìm kiếm sự hòa thuận và duy trì sự ổn định trong tập thể.',

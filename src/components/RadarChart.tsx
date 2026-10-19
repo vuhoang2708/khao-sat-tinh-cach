@@ -12,16 +12,16 @@ export const RadarChart: React.FC<RadarChartProps> = ({ scores }) => {
 
   // 4 Axes: Top (Eagle), Right (Peacock), Bottom (Dove), Left (Owl)
   // Let's arrange nicely:
-  // 0: Top (North) -> Eagle (Đại Bàng - Driver)
-  // 1: Right (East) -> Peacock (Chim Công - Expressive)
-  // 2: Bottom (South) -> Dove (Bồ Câu - Amiable)
-  // 3: Left (West) -> Owl (Chim Cú - Analytical)
+  // 0: Top (North) -> Eagle (Đại Bàng - Chỉ Đạo)
+  // 1: Right (East) -> Peacock (Chim Công - Thể Hiện)
+  // 2: Bottom (South) -> Dove (Bồ Câu - Dễ Chịu)
+  // 3: Left (West) -> Owl (Chim Cú - Phân Tích)
 
   const axes: { key: SocialStyle; label: string; icon: string; angle: number }[] = [
-    { key: 'eagle', label: 'Đại Bàng', icon: '🦅', angle: -Math.PI / 2 },
-    { key: 'peacock', label: 'Chim Công', icon: '🦚', angle: 0 },
-    { key: 'dove', label: 'Bồ Câu', icon: '🕊️', angle: Math.PI / 2 },
-    { key: 'owl', label: 'Chim Cú', icon: '🦉', angle: Math.PI }
+    { key: 'eagle', label: 'Đại Bàng (Chỉ Đạo)', icon: '🦅', angle: -Math.PI / 2 },
+    { key: 'peacock', label: 'Chim Công (Thể Hiện)', icon: '🦚', angle: 0 },
+    { key: 'dove', label: 'Bồ Câu (Dễ Chịu)', icon: '🕊️', angle: Math.PI / 2 },
+    { key: 'owl', label: 'Chim Cú (Phân Tích)', icon: '🦉', angle: Math.PI }
   ];
 
   // Concentric polygon grids (25%, 50%, 75%, 100%)
